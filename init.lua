@@ -1,31 +1,77 @@
--- vim = hs.loadSpoon('VimMode')
-
--- vim:enableKeySequence('j', 'k')
-
--- vim:disableForApp('iTerm2')
--- vim:disableForApp('MacVim')
--- vim:disableForApp('Terminal')
--- vim:disableForApp('Oni')
--- -- Basic key binding to ctrl+;
--- -- You can choose any key binding you want here, see:
--- --   https://www.hammerspoon.org/docs/hs.hotkey.html#bind
-
--- hs.hotkey.bind({'ctrl'}, ';', function()
---   vim:enter()
--- end)
---
---
+local  c = {"ctrl"}
+hs.window.animationDuration = 0
 hs.application.enableSpotlightForNameSearches(true)
 
-hs.hotkey.bind({"shift", "ctrl"}, "F", function()
+hs.hotkey.bind(c, "F", function()
   hs.application.open("terminal")
 end)
-hs.hotkey.bind({"shift", "ctrl"}, "J", function()
+hs.hotkey.bind(c, "G", function()
   hs.application.open("Oni")
 end)
-hs.hotkey.bind({"shift", "ctrl"}, "C", function()
+hs.hotkey.bind(c, "C", function()
   hs.application.open("google chrome")
 end)
-hs.hotkey.bind({"shift", "ctrl"}, "Q", function()
-    hs.application.kill()
+hs.hotkey.bind(c, "S", function()
+  hs.application.open("spotify")
+end)
+hs.hotkey.bind(c, "Q", function()
+    hs.window.focusedWindow():close()
+end)
+hs.hotkey.bind(c, 'M', function() 
+    hs.window.focusedWindow():toggleFullScreen()
+end)
+hs.hotkey.bind(c, 'N', function() 
+    hs.window.focusedWindow():minimize()
+end)
+
+hs.hotkey.bind(c, "H", function()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local max = win:screen():frame()
+
+  f.x = max.x
+  f.y = max.y
+  f.w = max.w / 2
+  f.h = max.h
+  win:setFrame(f)
+end)
+
+hs.hotkey.bind(c, "L", function()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local max = win:screen():frame()
+
+  f.x = max.w / 2
+  f.y = max.y
+  f.w = max.w / 2
+  f.h = max.h
+  win:setFrame(f)
+end)
+
+hs.hotkey.bind(c, "K", function()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local max = win:screen():frame()
+
+  f.x = max.x
+  f.y = max.y
+  f.w = max.w
+  f.h = max.h / 2
+  win:setFrame(f)
+end)
+
+hs.hotkey.bind(c, "J", function()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local max = win:screen():frame()
+
+  f.x = max.x
+  f.y = max.h / 2
+  f.w = max.w
+  f.h = max.h / 2
+  win:setFrame(f)
+end)
+
+hs.hotkey.bind(c, ';', function() 
+    hs.fnutils.map(hs.window.visibleWindows(), hs.grid.snap) 
 end)
